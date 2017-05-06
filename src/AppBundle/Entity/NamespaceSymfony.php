@@ -4,10 +4,8 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-
 /**
  * @ORM\Entity
- * @ORM\Table("NamespaceSymfony")
  */
 class NamespaceSymfony {
 
@@ -31,15 +29,14 @@ class NamespaceSymfony {
     private $url;
 
     /**
-     *  @ORM\ManyToOne(targetEntity="InterfaceSymfony", inversedBy="NamespaceSymfony")
-     *
+     *  @ORM\OneToMany(targetEntity="InterfaceSymfony", inversedBy="namespace")
      */
-    private $interface;
+    private $interfaces;
 
     /**
-     * @ORM\ManyToOne(targetEntity="InterfaceSymfony", inversedBy="NamespaceSymfony")
+     * @ORM\OneToMany(targetEntity="ClassSymfony", inversedBy="namespace")
      */
-    private $class;
+    private $classes;
 
     /**
      * @return mixed
@@ -47,14 +44,6 @@ class NamespaceSymfony {
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * @param mixed $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
     }
 
     /**
@@ -94,7 +83,7 @@ class NamespaceSymfony {
      */
     public function getInterface()
     {
-        return $this->interface;
+        return $this->interfaces;
     }
 
     /**
@@ -110,7 +99,7 @@ class NamespaceSymfony {
      */
     public function getClass()
     {
-        return $this->class;
+        return $this->classes;
     }
 
     /**
@@ -120,6 +109,5 @@ class NamespaceSymfony {
     {
         $this->class = $class;
     }
-
 
 }

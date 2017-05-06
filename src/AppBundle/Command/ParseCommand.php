@@ -3,7 +3,7 @@
 
 namespace AppBundle\Command;
 
-use \Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DomCrawler\Crawler;
@@ -36,14 +36,12 @@ class ParseCommand extends  Command
 
         $crawler = new Crawler($html);
         $row = $crawler->filter('div.namespace-container > ul > li > a');
-        foreach ($row as $item)
-        {
+        foreach ($row as $item) {
+
             var_dump ($item);
         }
 
-
     }
-
 
 }
 
