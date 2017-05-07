@@ -31,16 +31,32 @@ class ParseCommand extends  Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-
+//namespace
         $html = file_get_contents('http://api.symfony.com/3.2/');
 
         $crawler = new Crawler($html);
         $row = $crawler->filter('div.namespace-container > ul > li > a');
-        foreach ($row as $item) {
 
-            var_dump ($item);
+       foreach ($row as $item) {
+            $urlSymf = $item->getAttribute("href");
+            $URLname = $item->textContent;
+
+            //var_dump ($urlSymf, $URLname);
+        }
+//class
+
+        $forClass = $crawler->filter
+        ('div.content > div.right-column > div.page-content > div.page-header > div.row > div > a');
+
+
+        foreach ($forClass as $item){
+
+            $classUrl = $item->getAttribute("href");
+            var_dump($classUrl);
         }
 
+
+      //  $forInterface = $crawler->filter();
     }
 
 }

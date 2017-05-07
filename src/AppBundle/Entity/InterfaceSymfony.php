@@ -29,7 +29,7 @@ class InterfaceSymfony {
     private $url;
 
     /**
-     * ORM\ManyToOne(targetEntity="NamespaceSymfony", mappedBy="interface")
+     * @ORM\ManyToOne(targetEntity="NamespaceSymfony", inversedBy="interfaces")
      */
     private $namespace;
 

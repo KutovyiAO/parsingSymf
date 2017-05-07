@@ -29,7 +29,7 @@ class ClassSymfony {
     private $url;
 
     /**
-     * @ORM\ManyToOne(targetEntity="NamespaceSymfony", mappedBy="class")
+     * @ORM\ManyToOne(targetEntity="NamespaceSymfony", inversedBy="classes")
      */
     private $namespace;
 

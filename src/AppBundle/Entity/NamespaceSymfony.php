@@ -29,12 +29,12 @@ class NamespaceSymfony {
     private $url;
 
     /**
-     *  @ORM\OneToMany(targetEntity="InterfaceSymfony", inversedBy="namespace")
+     *  @ORM\OneToMany(targetEntity="InterfaceSymfony", mappedBy="namespace")
      */
     private $interfaces;
 
     /**
-     * @ORM\OneToMany(targetEntity="ClassSymfony", inversedBy="namespace")
+     * @ORM\OneToMany(targetEntity="ClassSymfony", mappedBy="namespace")
      */
     private $classes;
 
@@ -91,7 +91,7 @@ class NamespaceSymfony {
      */
     public function setInterface($interface)
     {
-        $this->interface = $interface;
+        $this->interfaces = $interface;
     }
 
     /**
@@ -107,7 +107,7 @@ class NamespaceSymfony {
      */
     public function setClass($class)
     {
-        $this->class = $class;
+        $this->classes = $class;
     }
 
 }
