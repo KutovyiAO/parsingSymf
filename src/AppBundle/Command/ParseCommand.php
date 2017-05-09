@@ -6,13 +6,14 @@ namespace AppBundle\Command;
 use AppBundle\Entity\ClassSymfony;
 use AppBundle\Entity\InterfaceSymfony;
 use AppBundle\Entity\NamespaceSymfony;
+use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DomCrawler\Crawler;
 
 
-class ParseCommand extends  Command
+class ParseCommand extends  ContainerAwareCommand
 {
 
 
@@ -35,7 +36,7 @@ class ParseCommand extends  Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
 //namespace
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->getContainer()->get('doctrine')->getManager();
 
         $html = file_get_contents('http://api.symfony.com/3.2/');
 
