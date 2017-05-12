@@ -17,85 +17,90 @@ class ParseCommand extends  ContainerAwareCommand
 {
 
 
+
     protected function configure()
     {
 
         $this
-            // the name of the command (the part after "bin/console")
             ->setName('app:parse')
-
-            // the short description shown while running "php bin/console list"
             ->setDescription('Creates a new parse API.symfony.com.')
-
-            // the full command description shown when running the command with
-            // the "--help" option
             ->setHelp('This command allows you to create a user...')
         ;
     }
 
+    /**
+     * @param InputInterface $input
+     *
+     * @param OutputInterface $output
+     *
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-//namespace
+
         $em = $this->getContainer()->get('doctrine')->getManager();
 
         $html = file_get_contents('http://api.symfony.com/3.2/');
 
         $crawler = new Crawler($html);
 
+//namespace
+
         $forNamespace = $crawler->filter('div.namespace-container > ul > li > a');
 
        foreach ($forNamespace as $item) {
 
-           $urlSymf = $item->getAttribute("href");
-           $urlName = $item->textContent;
+               $urlSymf = $item->getAttribute("href");
+               $urlName = $item->textContent;
 
-           $namespace = new NamespaceSymfony();
-           $namespace->setUrl($urlSymf);
-           $namespace->setName($urlName);
-           $em->persist($namespace);
-           $em->flush();
-        }
-//class
+               $namespace = new NamespaceSymfony();
+               $namespace->setUrl($urlSymf);
+               $namespace->setName($urlName);
+               $em->persist($namespace);
 
+// Class
 
-        $forClass = $crawler->filter
-        ('div.content > div.right-column > div.page-content > div.page-header > div.row > div.col-md-6 > a ');
+           $htmlNamespaceForClass = file_get_contents('http://api.symfony.com/3.2/'. $urlSymf);
+           $CrawlerNamespace = new Crawler($htmlNamespaceForClass);
 
+           $forClass = $CrawlerNamespace->filter
+           ('div#page-content > div.container-fluid.underlined > div.row > div.col-md-6 > a');
 
-        foreach ($forClass as $item) {
+           foreach ($forClass as $item) {
 
-            $classUrl = $item->getAttribute("href");
-            $className = $item->textContent;
+               $classUrl  = $item->getAttribute("href");
+               $className = $item->textContent;
+               $class = new ClassSymfony();
 
-            $class = new ClassSymfony();
-
-            $class->setUrl($classUrl);
-            $class->setName($className);
-            $class->setNamespace($namespace);
-            $em->persist($class);
-            $em->flush();
-        }
+               $class->setUrl($classUrl);
+               $class->setName($className);
+               $class->setNamespace($namespace);
+               $em->persist($class);
+           }
 
 //Interface
-       $forInterface = $crawler->filter
-           ('div.content > div.right-column > div.page-content > div.page-header > div.row > div.col-md-6 > em > a' );
 
-        foreach ($forInterface as $item) {
+           $htmlNamespaceForInt = file_get_contents('http://api.symfony.com/3.2/'. $urlSymf);
+           $CrawlerInterface = new Crawler($htmlNamespaceForInt);
 
-            $interUrl = $item->getAttribute("href");
-            $interName = $item->textContent;
+           $forInterface = $CrawlerInterface->filter
+           ('div.container-fluid.underlined > div.row > div.col-md-6 > em > a' );
 
-            $interface = new InterfaceSymfony();
+           foreach ($forInterface as $item) {
 
-            $interface->setUrl($interUrl);
-            $interface->setName($interName);
-            $interface->setNamespace($namespace);
-            $em->persist($interface);
-            $em->flush();
+                $interUrl = $item->getAttribute("href");
+                $interName = $item->textContent;
+
+                $interface = new InterfaceSymfony();
+
+                $interface->setUrl($interUrl);
+                $interface->setName($interName);
+                $interface->setNamespace($namespace);
+                $em->persist($interface);
+
         }
 
-
     }
-
+        $em->flush();
+    }
 }
 
