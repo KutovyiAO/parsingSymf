@@ -34,6 +34,48 @@ class NamespaceSymfony {
     private $interfaces;
 
     /**
+     * @ORM\ManyToOne(targetEntity="NamespaceSymfony", inversedBy="child")
+     */
+    private $parent;
+
+    /**
+     * @ORM\OneToMany(targetEntity="NamespaceSymfony", mappedBy="parent")
+     */
+    private $child;
+
+    /**
+     * @return mixed
+     */
+    public function getParent()
+    {
+        return $this->parent;
+    }
+
+    /**
+     * @param mixed $parent
+     */
+    public function setParent($parent)
+    {
+        $this->parent = $parent;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getChild()
+    {
+        return $this->child;
+    }
+
+    /**
+     * @param mixed $child
+     */
+    public function setChild($child)
+    {
+        $this->child = $child;
+    }
+
+    /**
      * @ORM\OneToMany(targetEntity="ClassSymfony", mappedBy="namespace")
      */
     private $classes;
