@@ -7,7 +7,7 @@
  */
 namespace AppBundle\Controller;
 
-
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use AppBundle\Entity\User;
 use AppBundle\Form\UserType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -16,11 +16,14 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class RegistrationController extends Controller
 {
+    /**
+     * @Route("/register", name="registration")
+     */
     public function registerAction(Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
 
         $user = new User();
-        $form = $this->createForm($user, UserType::class);
+        $form = $this->createForm(UserType::class, $user);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -32,7 +35,7 @@ class RegistrationController extends Controller
             $em->persist($user);
             $em->flush();
 
-            return $this->redirectToRoute('DohrenaKrutoySayt');
+            return $this->redirectToRoute('login');
 
         }
 
