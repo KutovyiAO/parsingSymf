@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: antonkutovoj
- * Date: 17.08.17
- * Time: 03:03
- */
+
 namespace AppBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -19,9 +14,8 @@ class RegistrationController extends Controller
     /**
      * @Route("/register", name="registration")
      */
-    public function registerAction(Request $request, UserPasswordEncoderInterface $passwordEncoder)
+    public function registerAction(Request $request)
     {
-
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
 
