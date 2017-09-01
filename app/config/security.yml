@@ -10,21 +10,14 @@ security:
     providers:
         our_db_provider:
             entity:
-                class: AppBundle:User
-                property: username
+               class: AppBundle:User
+               property: username
                 # if you're using multiple entity managers
                 # manager_name: customer
 
     firewalls:
         main:
-            pattern:    ^/
-            http_basic: ~
-            provider: our_db_provider
-
-            # activate different ways to authenticate
-
-            # http://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
-            #http_basic: ~
-
-            # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
-            #form_login: ~
+          anonymous: ~
+          form_login:
+                login_path: login
+                check_path: login
