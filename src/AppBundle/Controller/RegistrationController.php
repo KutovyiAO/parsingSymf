@@ -22,8 +22,8 @@ class RegistrationController extends Controller
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
-            $user->setPlainPassword($password);
+            $password = $passwordEncoder->encodePassword($user, $user->getPassword());
+            $user->setPassword($password);
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
