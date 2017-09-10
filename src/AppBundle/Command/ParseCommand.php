@@ -100,7 +100,7 @@ class ParseCommand extends  ContainerAwareCommand
 //        $em->flush();
     }
 
-    public function getNamespaceRecursion($url, $parent = null)
+    public function getNamespaceRecursion(string $url, $parent = null): int
     {
         $html = file_get_contents($url);
 
