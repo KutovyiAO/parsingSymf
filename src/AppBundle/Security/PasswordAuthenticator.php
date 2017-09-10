@@ -24,6 +24,7 @@ class PasswordAuthenticator implements SimpleFormAuthenticatorInterface
     {
         try {
             $user = $userProvider->loadUserByUsername($token->getUsername());
+
         } catch (UsernameNotFoundException $e) {
             // CAUTION: this message will be returned to the client
             // (so don't put any un-trusted messages / error strings here)
@@ -49,7 +50,6 @@ class PasswordAuthenticator implements SimpleFormAuthenticatorInterface
                 $providerKey,
                 $user->getRoles()
             );
-        }
 
         // CAUTION: this message will be returned to the client
         // (so don't put any un-trusted messages / error strings here)
@@ -64,6 +64,7 @@ class PasswordAuthenticator implements SimpleFormAuthenticatorInterface
 
     public function createToken(Request $request, $username, $password, $providerKey)
     {
+//        var_dump($username, $password);exit;
         return new UsernamePasswordToken($username, $password, $providerKey);
     }
 }
