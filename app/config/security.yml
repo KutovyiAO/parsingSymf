@@ -18,8 +18,11 @@ security:
     firewalls:
         main:
           anonymous: ~
-          pattern: ^/admin
+          pattern: ^/
           simple_form:
-                authenticator: AppBundle\Security\PasswordAuthenticator
-                login_path: login
-                check_path: login_check
+            authenticator: AppBundle\Security\PasswordAuthenticator
+            login_path: login
+            check_path: login_check
+          logout:
+            path:   /logout
+            target: /login
